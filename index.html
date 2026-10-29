@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INRange - Warfarin & Anticoagulation Tracker</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var q = params.get('lang');
+        if (q) {
+          lang = q;
+        } else {
+          var saved = localStorage.getItem('inrange_lang');
+          if (saved) {
+            lang = saved;
+          } else if (navigator.language && navigator.language.startsWith('zh')) {
+            lang = 'zh';
+          }
+        }
+      } catch (e) {}
+      var isZh = (lang === 'zh' || lang === 'zh-Hans');
+      document.documentElement.lang = isZh ? 'zh-Hans' : 'en';
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #F2F2F7;
+      --card-bg: #FFFFFF;
+      --text-primary: #1C1C1E;
+      --text-secondary: #8E8E93;
+      --tint: #007AFF;
+      --tint-green: #34C759;
+      --border: #E5E5EA;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --card-bg: #1C1C1E;
+        --text-primary: #FFFFFF;
+        --text-secondary: #8E8E93;
+        --tint: #0A84FF;
+        --tint-green: #30D158;
+        --border: #2C2C2E;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+    .container {
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 48px 32px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+    .app-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #007AFF 0%, #34C759 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 42px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 122, 255, 0.25);
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      min-height: 28px;
+    }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: block;
+      background: var(--bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      border-color: var(--tint);
+      color: var(--tint);
+      transform: translateY(-2px);
+    }
+    footer {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Bottom-Right Floating Language Switcher */
+    .lang-switcher-fixed {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--card-bg);
+      padding: 4px 6px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 100;
+    }
+    .lang-pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-pill-btn.active {
+      background: var(--tint);
+      color: #FFFFFF;
+    }
+
+    /* Declarative Visibility via HTML lang Attribute */
+    html[lang="en"] .lang-zh {
+      display: none !important;
+    }
+    html[lang="zh-Hans"] .lang-en,
+    html[lang="zh"] .lang-en {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="app-icon">IN</div>
+      <h1>INRange</h1>
+      
+      <p class="tagline lang-en">Warfarin & Anticoagulation Tracker</p>
+      <p class="tagline lang-zh">华法林抗凝管理助手</p>
+
+      <div class="nav-links">
+        <a href="privacy.html" class="btn" id="link-privacy">
+          <span class="lang-en">🔒 Privacy Policy</span>
+          <span class="lang-zh">🔒 隐私政策</span>
+        </a>
+        <a href="support.html" class="btn" id="link-support">
+          <span class="lang-en">💬 Technical Support & FAQ</span>
+          <span class="lang-zh">💬 技术支持与常见问题</span>
+        </a>
+      </div>
+
+      <footer>
+        <p class="lang-en">© 2026 INRange. All rights reserved.</p>
+        <p class="lang-zh">© 2026 INRange. 保留所有权利。</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Language Switcher in bottom right -->
+  <div class="lang-switcher-fixed">
+    <span style="font-size: 15px; margin-left: 4px; margin-right: 2px; user-select: none;">🌐</span>
+    <button type="button" class="lang-pill-btn" id="btn-en" onclick="setLang('en')">English</button>
+    <button type="button" class="lang-pill-btn" id="btn-zh" onclick="setLang('zh')">简体中文</button>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const isZh = (lang === 'zh' || lang === 'zh-Hans');
+      const code = isZh ? 'zh' : 'en';
+      document.documentElement.lang = isZh ? 'zh-Hans' : 'en';
+
+      const btnZh = document.getElementById('btn-zh');
+      const btnEn = document.getElementById('btn-en');
+      if (btnZh && btnEn) {
+        if (isZh) {
+          btnZh.classList.add('active');
+          btnEn.classList.remove('active');
+        } else {
+          btnEn.classList.add('active');
+          btnZh.classList.remove('active');
+        }
+      }
+
+      // Propagate language to all internal links
+      document.querySelectorAll('a[href]').forEach(a => {
+        let href = a.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('mailto:')) {
+          let base = href.split('?')[0];
+          a.setAttribute('href', base + '?lang=' + code);
+        }
+      });
+
+      try {
+        localStorage.setItem('inrange_lang', code);
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      setLang(document.documentElement.lang.startsWith('zh') ? 'zh' : 'en');
+    });
+  </script>
+</body>
+</html>

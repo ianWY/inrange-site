@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Support - INRange</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var q = params.get('lang');
+        if (q) {
+          lang = q;
+        } else {
+          var saved = localStorage.getItem('inrange_lang');
+          if (saved) {
+            lang = saved;
+          } else if (navigator.language && navigator.language.startsWith('zh')) {
+            lang = 'zh';
+          }
+        }
+      } catch (e) {}
+      var isZh = (lang === 'zh' || lang === 'zh-Hans');
+      document.documentElement.lang = isZh ? 'zh-Hans' : 'en';
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #F2F2F7;
+      --card-bg: #FFFFFF;
+      --text-primary: #1C1C1E;
+      --text-secondary: #8E8E93;
+      --tint: #007AFF;
+      --tint-green: #34C759;
+      --border: #E5E5EA;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --card-bg: #1C1C1E;
+        --text-primary: #FFFFFF;
+        --text-secondary: #8E8E93;
+        --tint: #0A84FF;
+        --tint-green: #30D158;
+        --border: #2C2C2E;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .lang-switcher {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .lang-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--tint);
+      color: #FFFFFF;
+      border-color: var(--tint);
+    }
+    .header-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .app-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, #007AFF 0%, #34C759 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .faq-q {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+    .faq-a {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+    .contact-box {
+      background: rgba(0, 122, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 36px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    footer a {
+      color: var(--tint);
+      text-decoration: none;
+    }
+    /* Bulletproof Language Visibility via HTML lang Attribute */
+    html[lang="en"] .lang-zh {
+      display: none !important;
+    }
+    html[lang="zh-Hans"] .lang-en,
+    html[lang="zh"] .lang-en {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">English</button>
+      <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">简体中文</button>
+    </div>
+
+    <div class="header-card">
+      <div class="app-icon">IN</div>
+      <h1 class="lang-en">Help & Support</h1>
+      <h1 class="lang-zh">帮助与技术支持</h1>
+      <p class="subtitle lang-en">INRange · Warfarin & INR Management Assistant</p>
+      <p class="subtitle lang-zh">INRange · 华法林与抗凝管理助手</p>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="section-card">
+      <h2 class="lang-en">Frequently Asked Questions</h2>
+      <h2 class="lang-zh">常见问题解答 (FAQ)</h2>
+
+      <div class="faq-item">
+        <div class="faq-q lang-en">1. Does INRange calculate or change my medication dosage?</div>
+        <div class="faq-q lang-zh">1. INRange 会自动计算或调整我的药量吗？</div>
+        <div class="faq-a lang-en">
+          No. INRange is strictly a logging, tracking, and reminder tool. It never prescribes or adjusts doses. You must enter the exact dose schedule prescribed by your physician or anticoagulation clinic.
+        </div>
+        <div class="faq-a lang-zh">
+          不会。INRange 仅作为服药记录与日程提醒辅助工具，绝不自行计算或更改处方剂量。您在应用中设置的每日服药量必须完全遵循主管医师或抗凝门诊医嘱。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q lang-en">2. How does iCloud synchronization work?</div>
+        <div class="faq-q lang-zh">2. iCloud 云同步是如何运作的？</div>
+        <div class="faq-a lang-en">
+          When signed into your Apple ID with iCloud Drive enabled, INRange automatically syncs your INR history and dosage schedule across your iPhone devices through Apple's secure CloudKit Private Database.
+        </div>
+        <div class="faq-a lang-zh">
+          只要您的 iPhone 登录了 Apple ID 并开启 iCloud，INRange 会自动通过 Apple 的 CloudKit 私有云数据库同步您的服药历史与 INR 数据，保障数据安全与多设备一致。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q lang-en">3. How do I export records to show my physician?</div>
+        <div class="faq-q lang-zh">3. 如何将记录导出给主治医生看？</div>
+        <div class="faq-a lang-en">
+          Navigate to <strong>Settings</strong> → tap <strong>Export Doctor Report</strong>. You can generate a formatted PDF report or copy raw summary text to share via AirDrop, Email, or Print.
+        </div>
+        <div class="faq-a lang-zh">
+          进入 <strong>设置 (Settings)</strong> → 点击 <strong>导出就医报告</strong>，系统会自动生成格式严谨的 PDF 报告或纯文本摘要，支持一键通过隔空投送、微信、邮件或打印分享给医生。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q lang-en">4. Can I customize pill tablet specifications?</div>
+        <div class="faq-q lang-zh">4. 可以自定义药片规格（单片毫克数）吗？</div>
+        <div class="faq-a lang-en">
+          Yes! Go to <strong>Settings</strong> → <strong>Pill Specification</strong>. You can choose common specs like 2.5mg, 3.0mg, or 5.0mg, and the tablet breakdown graphics will immediately update to reflect full and partial tablets.
+        </div>
+        <div class="faq-a lang-zh">
+          支持！在 <strong>设置</strong> → <strong>单片药量规格</strong> 中，您可以选择 2.5mg、3.0mg 或 5.0mg 等常见华法林片规格，药片图形分解会自动按该规格呈现整片与分片。
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="section-card">
+      <h2 class="lang-en">Contact Developer</h2>
+      <h2 class="lang-zh">联系开发者与反馈</h2>
+      <p class="lang-en">
+        If you encounter any issues, have feature requests, or need technical assistance, feel free to reach out:
+      </p>
+      <p class="lang-zh">
+        如果您在使用过程中遇到任何技术故障，或有改进建议与需求，欢迎随时联系我们：
+      </p>
+      <div class="contact-box">
+        <p><strong>Email:</strong> <a href="mailto:ian.wangyu@gmail.com" style="color: var(--tint);">ian.wangyu@gmail.com</a></p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 INRange. All rights reserved.</p>
+      <p style="margin-top: 6px;"><a href="index.html">Home</a> · <a href="support.html">Technical Support</a> · <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const isZh = (lang === 'zh' || lang === 'zh-Hans');
+      const code = isZh ? 'zh' : 'en';
+      document.documentElement.lang = isZh ? 'zh-Hans' : 'en';
+
+      const btnZh = document.getElementById('btn-zh');
+      const btnEn = document.getElementById('btn-en');
+      if (btnZh && btnEn) {
+        if (isZh) {
+          btnZh.classList.add('active');
+          btnEn.classList.remove('active');
+        } else {
+          btnEn.classList.add('active');
+          btnZh.classList.remove('active');
+        }
+      }
+
+      // Propagate language to internal links
+      document.querySelectorAll('a[href]').forEach(a => {
+        let href = a.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('mailto:')) {
+          let base = href.split('?')[0];
+          a.setAttribute('href', base + '?lang=' + code);
+        }
+      });
+
+      try {
+        localStorage.setItem('inrange_lang', code);
+      } catch (e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      setLang(document.documentElement.lang.startsWith('zh') ? 'zh' : 'en');
+    });
+  </script>
+</body>
+</html>
